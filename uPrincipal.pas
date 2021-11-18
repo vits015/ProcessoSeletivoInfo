@@ -83,7 +83,7 @@ end;
 procedure TfrmPrincipal.criaXML(pessoa: TPessoa);
 var
   XMLDocument:TXMLDOCUMENT;
-  NodeRegistro, NodeEndereco: IXMLNode;
+  NodeRegistro, NodeEndereco,NodePessoa: IXMLNode;
   erro:boolean;
   msgErro:String;
 begin
@@ -92,12 +92,13 @@ XMLDocument:= TXMLDocument.Create(Self);
       try
         XMLDocument.Active := True;
         NodeRegistro := XMLDocument.AddChild('Cadastro');
-        NodeRegistro.ChildValues['Nome'] := pessoa.nome;
-        NodeRegistro.ChildValues['Identidade'] := pessoa.identidade;
-        NodeRegistro.ChildValues['CPF'] := pessoa.cpf;
-        NodeRegistro.ChildValues['Telefone'] := pessoa.telefone;
-        NodeRegistro.ChildValues['Email'] := pessoa.email;
-        NodeEndereco := NodeRegistro.AddChild('Endereco');
+        NodePessoa := NodeRegistro.AddChild('Pessoa');
+        NodePessoa.ChildValues['Nome'] := pessoa.nome;
+        NodePessoa.ChildValues['Identidade'] := pessoa.identidade;
+        NodePessoa.ChildValues['CPF'] := pessoa.cpf;
+        NodePessoa.ChildValues['Telefone'] := pessoa.telefone;
+        NodePessoa.ChildValues['Email'] := pessoa.email;
+        NodeEndereco := NodePessoa.AddChild('Endereco');
         NodeEndereco.ChildValues['CEP'] := pessoa.Endereco.cep;
         NodeEndereco.ChildValues['Bairro'] := pessoa.Endereco.bairro;
         NodeEndereco.ChildValues['Logradouro'] := pessoa.Endereco.logradouro;
