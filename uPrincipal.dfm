@@ -613,7 +613,7 @@ object frmPrincipal: TfrmPrincipal
     end
     object Image1: TImage
       Left = 38
-      Top = 0
+      Top = 8
       Width = 316
       Height = 70
       Margins.Left = 10
@@ -910,28 +910,28 @@ object frmPrincipal: TfrmPrincipal
         Top = 156
         Width = 142
         Height = 22
-        TabOrder = 4
+        TabOrder = 5
       end
       object edtEstado: TEdit
         Left = 310
         Top = 154
         Width = 80
         Height = 22
-        TabOrder = 5
+        TabOrder = 6
       end
       object edtPais: TEdit
         Left = 469
         Top = 154
         Width = 89
         Height = 22
-        TabOrder = 6
+        TabOrder = 7
       end
       object edtNumero: TEdit
         Left = 486
         Top = 114
         Width = 72
         Height = 22
-        TabOrder = 7
+        TabOrder = 4
       end
     end
     object edtIdentidade: TMaskEdit
