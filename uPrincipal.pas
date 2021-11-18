@@ -10,7 +10,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, REST.Response.Adapter,
   Datasnap.DBClient, Xml.xmldom, Xml.XMLIntf, Xml.XMLDoc, uEnvioEmail,
-  Vcl.Imaging.pngimage;
+  Vcl.Imaging.pngimage, uEndereco, uPessoa;
 
 type
   TfrmPrincipal = class(TForm)
@@ -53,6 +53,11 @@ type
     procedure btnEnviarClick(Sender: TObject);
   private
     { Private declarations }
+    Function preencheEndereco(endereco:TEndereco):TEndereco;
+    Function preenchePessoa(pessoa:TPessoa):TPessoa;
+    procedure criaXML(pessoa:TPessoa);
+    function montaCorpoEmail(pessoa:TPessoa; memo:TMemo):TStrings;
+    procedure LimpaEndereco;
   public
     { Public declarations }
   end;
@@ -66,32 +71,42 @@ implementation
 
 procedure TfrmPrincipal.btnEnviarClick(Sender: TObject);
 var
+  pessoa:TPessoa;
+begin
+  pessoa:=preenchePessoa(pessoa);
+  criaXML(pessoa);
+  montaCorpoEmail(pessoa, frmEnvioEmail.memCorpo);
+  frmEnvioEmail.edtAnexo.text:='C:\Cadastro.xml';
+  frmEnvioEmail.ShowModal;
+end;
+
+procedure TfrmPrincipal.criaXML(pessoa: TPessoa);
+var
   XMLDocument:TXMLDOCUMENT;
   NodeRegistro, NodeEndereco: IXMLNode;
   erro:boolean;
-  msgErro, StringXML:String;
+  msgErro:String;
 begin
-  XMLDocument:= TXMLDocument.Create(Self);
+XMLDocument:= TXMLDocument.Create(Self);
   try
       try
         XMLDocument.Active := True;
         NodeRegistro := XMLDocument.AddChild('Cadastro');
-        NodeRegistro.ChildValues['Nome'] := edtNome.Text;
-        NodeRegistro.ChildValues['Identidade'] := edtIdentidade.Text;
-        NodeRegistro.ChildValues['CPF'] := edtCPF.Text;
-        NodeRegistro.ChildValues['Telefone'] := edtTelefone.Text;
-        NodeRegistro.ChildValues['Email'] := edtEmail.Text;
+        NodeRegistro.ChildValues['Nome'] := pessoa.nome;
+        NodeRegistro.ChildValues['Identidade'] := pessoa.identidade;
+        NodeRegistro.ChildValues['CPF'] := pessoa.cpf;
+        NodeRegistro.ChildValues['Telefone'] := pessoa.telefone;
+        NodeRegistro.ChildValues['Email'] := pessoa.email;
         NodeEndereco := NodeRegistro.AddChild('Endereco');
-        NodeEndereco.ChildValues['CEP'] := edtCEP.text;
-        NodeEndereco.ChildValues['Bairro'] := edtBairro.text;
-        NodeEndereco.ChildValues['Logradouro'] := edtLogradouro.text;
-        NodeEndereco.ChildValues['Complemento'] := edtComplemento.text;
-        NodeEndereco.ChildValues['Numero'] := edtNumero.text;
-        NodeEndereco.ChildValues['Cidade'] := edtCidade.text;
-        NodeEndereco.ChildValues['Estado'] := edtEstado.text;
-        NodeEndereco.ChildValues['Pais'] := edtPais.text;
+        NodeEndereco.ChildValues['CEP'] := pessoa.Endereco.cep;
+        NodeEndereco.ChildValues['Bairro'] := pessoa.Endereco.bairro;
+        NodeEndereco.ChildValues['Logradouro'] := pessoa.Endereco.logradouro;
+        NodeEndereco.ChildValues['Complemento'] := pessoa.Endereco.complemento;
+        NodeEndereco.ChildValues['Numero'] := pessoa.Endereco.numero.ToString;
+        NodeEndereco.ChildValues['Cidade'] := pessoa.Endereco.cidade;
+        NodeEndereco.ChildValues['Estado'] := pessoa.Endereco.Estado;
+        NodeEndereco.ChildValues['Pais'] := pessoa.Endereco.Pais;
         XMLDocument.SaveToFile('C:\Cadastro.xml');
-        StringXML := XMLDocument.XML.Text;
         except on e:Exception do
         begin
           erro:=true;
@@ -105,10 +120,6 @@ begin
       XMLDocument.Free;
     end;
   end;
-
-  frmEnvioEmail.memCorpo.lines.add(StringXML);
-  frmEnvioEmail.edtAnexo.text:='C:\Cadastro.xml';
-  frmEnvioEmail.ShowModal;
 end;
 
 procedure TfrmPrincipal.edtCEPExit(Sender: TObject);
@@ -134,6 +145,70 @@ begin
 
   end;
 
+
+end;
+
+procedure TfrmPrincipal.LimpaEndereco;
+begin
+  edtBairro.Text:='';
+  edtCidade.Text:='';
+  edtLogradouro.Text:='';
+  edtComplemento.text:='';
+  edtEstado.Text:='';
+  edtPais.Text:='';
+end;
+
+function TfrmPrincipal.montaCorpoEmail(pessoa: TPessoa; memo: TMemo): TStrings;
+begin
+  memo.Lines.Add('Dados do Cadastro:');
+  memo.Lines.Add('');
+  memo.Lines.Add('- Nome: '        +pessoa.nome);
+  memo.Lines.Add('- Identidade: '  +pessoa.identidade);
+  memo.Lines.Add('- CPF: '         +pessoa.cpf);
+  memo.Lines.Add('- Telefone: '    +pessoa.telefone);
+  memo.Lines.Add('- Email: '       +pessoa.email);
+  memo.Lines.Add('- Endereço: ');
+  memo.Lines.Add('      - Cep: '       +pessoa.Endereco.cep);
+  memo.Lines.Add('      - Logradouro: '+pessoa.Endereco.logradouro);
+  memo.Lines.Add('      - Numero: '    +pessoa.Endereco.numero.ToString);
+  memo.Lines.Add('      - Complemento: ' +pessoa.Endereco.complemento);
+  memo.Lines.Add('      - Bairro: '    +pessoa.Endereco.bairro);
+  memo.Lines.Add('      - Cidade: '    +pessoa.Endereco.cidade);
+  memo.Lines.Add('      - Estado: '    +pessoa.Endereco.Estado);
+  memo.Lines.Add('      - Pais: '      +pessoa.Endereco.Pais);
+end;
+
+function TfrmPrincipal.preencheEndereco(endereco: TEndereco): TEndereco;
+begin
+  endereco := TEndereco.Create;
+  try
+    endereco.cep:=edtcep.Text;
+    endereco.bairro:=edtBairro.Text;
+    endereco.logradouro:=edtLogradouro.Text;
+    endereco.cidade:=edtCidade.Text;
+    endereco.Estado:=edtEstado.Text;
+    endereco.numero:=  StrToInt(edtNumero.Text);
+    endereco.Pais:=edtPais.Text;
+  finally
+    result:=endereco;
+  end;
+end;
+
+function TfrmPrincipal.preenchePessoa(pessoa: TPessoa): TPessoa;
+var
+  endereco:TEndereco;
+begin
+  pessoa := TPessoa.Create;
+  try
+    pessoa.nome:=edtNome.Text;
+    pessoa.identidade:=edtIdentidade.Text;
+    pessoa.cpf:=edtCPF.Text;
+    pessoa.telefone:=edtTelefone.Text;
+    pessoa.email:=edtEmail.Text;
+    pessoa.Endereco:=preencheEndereco(endereco);
+  finally
+    result:=pessoa;
+  end;
 
 end;
 

@@ -3,7 +3,9 @@ program InfoSistemas;
 uses
   Vcl.Forms,
   uPrincipal in 'uPrincipal.pas' {frmPrincipal},
-  uEnvioEmail in 'uEnvioEmail.pas' {frmEnvioEmail};
+  uEnvioEmail in 'uEnvioEmail.pas' {frmEnvioEmail},
+  uEndereco in 'uEndereco.pas',
+  uPessoa in 'uPessoa.pas';
 
 {$R *.res}
 
