@@ -1,7 +1,8 @@
 object frmEnvioEmail: TfrmEnvioEmail
   Left = 537
   Top = 219
-  BorderStyle = bsDialog
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
   Caption = 'Info Sistemas - Enviar E-mail'
   ClientHeight = 458
   ClientWidth = 611
