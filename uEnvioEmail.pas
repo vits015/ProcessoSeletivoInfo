@@ -8,7 +8,8 @@ uses
 
   IniFiles,IdComponent,IdTCPConnection,IdTCPClient,IdHTTP,IdBaseComponent,IdMessage,
   IdExplicitTLSClientServerBase,IdMessageClient,IdSMTPBase,IdSMTP,IdIOHandler,
-  IdIOHandlerSocket,IdIOHandlerStack,IdSSL,IdSSLOpenSSL,IdAttachmentFile,IdText;
+  IdIOHandlerSocket,IdIOHandlerStack,IdSSL,IdSSLOpenSSL,IdAttachmentFile,IdText,
+  Vcl.ExtCtrls, Vcl.ComCtrls;
 
 type
   TfrmEnvioEmail = class(TForm)
@@ -66,8 +67,8 @@ var
   IdText               : TIdText;
   idSMTP               : TIdSMTP;
   IdSSLIOHandlerSocket : TIdSSLIOHandlerSocketOpenSSL;
+  cursor:TCursor;
 begin
-
   try
     try
       //Criação e leitura do arquivo INI com as configurações

@@ -2,9 +2,9 @@ object frmEnvioEmail: TfrmEnvioEmail
   Left = 0
   Top = 0
   Caption = 'Enviar E-mail'
-  ClientHeight = 425
+  ClientHeight = 448
   ClientWidth = 601
-  Color = clBtnFace
+  Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -72,9 +72,10 @@ object frmEnvioEmail: TfrmEnvioEmail
   end
   object btnEnviar: TButton
     Left = 215
-    Top = 360
+    Top = 368
     Width = 162
     Height = 49
+    Cursor = crHandPoint
     Caption = 'Enviar'
     TabOrder = 4
     OnClick = btnEnviarClick
