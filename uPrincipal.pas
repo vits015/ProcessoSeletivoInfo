@@ -128,6 +128,7 @@ begin
   RESTClient1.BaseURL:='http://viacep.com.br/ws/'+ StringReplace(edtCEP.Text,'-','',[rfReplaceAll, rfIgnoreCase]) +'/json';
   try
     RESTRequest1.Execute;
+
     edtBairro.Text:= StringReplace(RESTResponse1.JSONValue.FindValue('bairro').ToString, '"','',[rfReplaceAll, rfIgnoreCase]);
     edtCidade.Text:= StringReplace(RESTResponse1.JSONValue.FindValue('localidade').ToString, '"','',[rfReplaceAll, rfIgnoreCase]);
     edtLogradouro.Text:= StringReplace(RESTResponse1.JSONValue.FindValue('logradouro').ToString, '"','',[rfReplaceAll, rfIgnoreCase]);
@@ -137,11 +138,7 @@ begin
     except on E:Exception do
     begin
       showmessage('CEP inválido');
-      edtBairro.Text:='';
-      edtCidade.Text:='';
-      edtLogradouro.Text:='';
-      edtComplemento.text:='';
-      edtEstado.Text:='';
+      LimpaEndereco;
     end;
 
   end;
