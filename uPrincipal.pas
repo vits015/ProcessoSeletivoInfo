@@ -169,14 +169,14 @@ begin
   memo.Lines.Add('- Telefone: '    +pessoa.telefone);
   memo.Lines.Add('- Email: '       +pessoa.email);
   memo.Lines.Add('- Endereço: ');
-  memo.Lines.Add('      - Cep: '       +pessoa.Endereco.cep);
-  memo.Lines.Add('      - Logradouro: '+pessoa.Endereco.logradouro);
-  memo.Lines.Add('      - Numero: '    +pessoa.Endereco.numero.ToString);
-  memo.Lines.Add('      - Complemento: ' +pessoa.Endereco.complemento);
-  memo.Lines.Add('      - Bairro: '    +pessoa.Endereco.bairro);
-  memo.Lines.Add('      - Cidade: '    +pessoa.Endereco.cidade);
-  memo.Lines.Add('      - Estado: '    +pessoa.Endereco.Estado);
-  memo.Lines.Add('      - Pais: '      +pessoa.Endereco.Pais);
+  memo.Lines.Add('      - Cep: '          +pessoa.Endereco.cep);
+  memo.Lines.Add('      - Logradouro: '   +pessoa.Endereco.logradouro);
+  memo.Lines.Add('      - Numero: '       +pessoa.Endereco.numero.ToString);
+  memo.Lines.Add('      - Complemento: '  +pessoa.Endereco.complemento);
+  memo.Lines.Add('      - Bairro: '       +pessoa.Endereco.bairro);
+  memo.Lines.Add('      - Cidade: '       +pessoa.Endereco.cidade);
+  memo.Lines.Add('      - Estado: '       +pessoa.Endereco.Estado);
+  memo.Lines.Add('      - Pais: '         +pessoa.Endereco.Pais);
 end;
 
 function TfrmPrincipal.preencheEndereco(endereco: TEndereco): TEndereco;
@@ -188,6 +188,7 @@ begin
     endereco.logradouro:=edtLogradouro.Text;
     endereco.cidade:=edtCidade.Text;
     endereco.Estado:=edtEstado.Text;
+    endereco.complemento:=edtComplemento.Text;
     endereco.numero:=  StrToInt(edtNumero.Text);
     endereco.Pais:=edtPais.Text;
   finally
