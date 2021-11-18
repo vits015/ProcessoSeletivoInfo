@@ -67,6 +67,7 @@ var
   idSMTP               : TIdSMTP;
   IdSSLIOHandlerSocket : TIdSSLIOHandlerSocketOpenSSL;
 begin
+
   try
     try
       //Criação e leitura do arquivo INI com as configurações

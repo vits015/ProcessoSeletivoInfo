@@ -99,9 +99,7 @@ begin
     finally
     begin
       if erro then
-        showmessage('Houve um erro: ' + msgErro)
-      else
-        Showmessage('Sucesso');
+        showmessage('Houve um erro: ' + msgErro);
       XMLDocument.Free;
     end;
   end;
