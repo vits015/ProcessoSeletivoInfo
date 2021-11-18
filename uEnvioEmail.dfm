@@ -4,7 +4,7 @@ object frmEnvioEmail: TfrmEnvioEmail
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Info Sistemas - Enviar E-mail'
-  ClientHeight = 458
+  ClientHeight = 529
   ClientWidth = 611
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
@@ -576,7 +576,7 @@ object frmEnvioEmail: TfrmEnvioEmail
   end
   object lbAnexo: TLabel
     Left = 38
-    Top = 323
+    Top = 411
     Width = 43
     Height = 14
     Caption = 'Anexo:'
@@ -605,12 +605,12 @@ object frmEnvioEmail: TfrmEnvioEmail
     Left = 96
     Top = 121
     Width = 450
-    Height = 168
+    Height = 264
     TabOrder = 2
   end
   object edtAnexo: TEdit
     Left = 96
-    Top = 321
+    Top = 409
     Width = 361
     Height = 21
     Enabled = False
@@ -618,7 +618,7 @@ object frmEnvioEmail: TfrmEnvioEmail
   end
   object btnEnviar: TButton
     Left = 215
-    Top = 368
+    Top = 456
     Width = 162
     Height = 49
     Cursor = crHandPoint
