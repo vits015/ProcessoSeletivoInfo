@@ -10,7 +10,7 @@ uses
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
   Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, REST.Response.Adapter,
   Datasnap.DBClient, Xml.xmldom, Xml.XMLIntf, Xml.XMLDoc, uEnvioEmail,
-  Vcl.Imaging.pngimage, uEndereco, uPessoa;
+  Vcl.Imaging.pngimage, uEndereco, uPessoa, iniFiles;
 
 type
   TfrmPrincipal = class(TForm)
@@ -51,6 +51,7 @@ type
     Image1: TImage;
     procedure edtCEPExit(Sender: TObject);
     procedure btnEnviarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     function preencheEndereco(endereco:TEndereco):TEndereco;
@@ -60,6 +61,7 @@ type
     procedure LimpaEndereco;
     procedure preparaEnvioEmail;
     procedure consultaCEP;
+    procedure criaArquivoIni;
   public
     { Public declarations }
   end;
@@ -96,6 +98,19 @@ begin
       LimpaEndereco;
     end;
   end;
+end;
+
+procedure TfrmPrincipal.criaArquivoIni;
+var ArquivoINI: TIniFile;
+begin
+  ArquivoINI := TIniFile.Create('.\config.ini');
+  ArquivoINI.WriteString('Email','From','envioemailinfo@gmail.com');
+  ArquivoINI.WriteString('Email','BccList','email');
+  ArquivoINI.WriteString('Email','Host','smtp.gmail.com');
+  ArquivoINI.WriteString('Email','Port','465');
+  ArquivoINI.WriteString('Email','Username','envioemailinfo@gmail.com');
+  ArquivoINI.WriteString('Email','Password','enviaemail123');
+  ArquivoINI.Free;
 end;
 
 procedure TfrmPrincipal.criaXML(pessoa: TPessoa);
@@ -146,6 +161,11 @@ end;
 procedure TfrmPrincipal.edtCEPExit(Sender: TObject);
 begin
   consultaCEP;
+end;
+
+procedure TfrmPrincipal.FormCreate(Sender: TObject);
+begin
+  criaArquivoIni;
 end;
 
 procedure TfrmPrincipal.LimpaEndereco;
