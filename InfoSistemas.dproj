@@ -134,9 +134,37 @@
                 <Platform value="Win64">False</Platform>
             </Platforms>
             <Deployment Version="3">
+                <DeployFile LocalName="Win32\Debug\libeay32.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <Enabled>false</Enabled>
+                        <RemoteName>libeay32.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Win32\Debug\InfoSistemas.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>InfoSistemas.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win32\Debug\ssleay32.dll" Configuration="Release" Class="File">
+                    <Platform Name="Win32">
+                        <Enabled>false</Enabled>
+                        <RemoteName>ssleay32.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win32\Debug\libeay32.dll" Configuration="Debug" Class="File">
+                    <Platform Name="Win32">
+                        <Enabled>false</Enabled>
+                        <RemoteName>libeay32.dll</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Win32\Debug\ssleay32.dll" Configuration="Debug" Class="File">
+                    <Platform Name="Win32">
+                        <Enabled>false</Enabled>
+                        <RemoteName>ssleay32.dll</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
