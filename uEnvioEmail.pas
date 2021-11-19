@@ -44,8 +44,7 @@ begin
   if edtPara.Text<>EmptyStr then
   begin
     if EnviarEmail(edtAssunto.Text, edtPara.Text, edtAnexo.Text, memCorpo.Lines)
-    then ShowMessage('Enviado com sucesso!')
-    else ShowMessage('Não foi possível enviar o e-mail!');
+    then ShowMessage('Enviado com sucesso!');
   end else
   begin
     showmessage('Favor preencher o destinatário');
@@ -132,7 +131,9 @@ begin
           IdSMTP.Send(idMsg);
         except on E:Exception do
           begin
+            Result := False;
             ShowMessage('Erro ao tentar enviar: ' + E.Message);
+            abort;
           end;
         end;
       end;

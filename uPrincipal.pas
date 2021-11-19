@@ -58,6 +58,7 @@ type
     procedure criaXML(pessoa:TPessoa);
     function montaCorpoEmail(pessoa:TPessoa; memo:TMemo):TStrings;
     procedure LimpaEndereco;
+    procedure preparaEnvioEmail;
   public
     { Public declarations }
   end;
@@ -65,19 +66,14 @@ type
 var
   frmPrincipal: TfrmPrincipal;
 
+
 implementation
 
 {$R *.dfm}
 
 procedure TfrmPrincipal.btnEnviarClick(Sender: TObject);
-var
-  pessoa:TPessoa;
 begin
-  pessoa:=preenchePessoa(pessoa);
-  criaXML(pessoa);
-  montaCorpoEmail(pessoa, frmEnvioEmail.memCorpo);
-  frmEnvioEmail.edtAnexo.text:='C:\Cadastro.xml';
-  frmEnvioEmail.ShowModal;
+  preparaEnvioEmail;
 end;
 
 procedure TfrmPrincipal.criaXML(pessoa: TPessoa);
@@ -158,6 +154,7 @@ end;
 
 function TfrmPrincipal.montaCorpoEmail(pessoa: TPessoa; memo: TMemo): TStrings;
 begin
+  memo.Clear;
   memo.Lines.Add('Dados do Cadastro:');
   memo.Lines.Add('');
   memo.Lines.Add('- Nome: '        +pessoa.nome);
@@ -209,6 +206,34 @@ begin
     result:=pessoa;
   end;
 
+end;
+
+procedure TfrmPrincipal.preparaEnvioEmail;
+var
+  pessoa:TPessoa;
+  erro:boolean;
+  msgErro:String;
+begin
+  erro:=false;
+  try
+    pessoa:=preenchePessoa(pessoa);
+    try
+      criaXML(pessoa);
+      montaCorpoEmail(pessoa, frmEnvioEmail.memCorpo);
+      frmEnvioEmail.edtAnexo.text:='C:\Cadastro.xml';
+      frmEnvioEmail.ShowModal;
+      except on e:exception do
+      begin
+        erro:=true;
+        msgErro:=e.Message;
+      end;
+    end;
+  finally
+    if erro then
+      showmessage('Houve um erro: ' + msgErro);
+    pessoa.Endereco.Free;
+    pessoa.Free;
+  end;
 end;
 
 end.

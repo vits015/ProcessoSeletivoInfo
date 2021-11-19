@@ -15,4 +15,5 @@ begin
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
   Application.CreateForm(TfrmEnvioEmail, frmEnvioEmail);
   Application.Run;
+  ReportMemoryLeaksOnShutdown:=true;
 end.
