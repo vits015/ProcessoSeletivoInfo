@@ -4326,7 +4326,7 @@ object frmEnvioEmail: TfrmEnvioEmail
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 0
+      TabOrder = 3
       OnClick = btnEnviarClick
     end
     object edtAnexo: TEdit
@@ -4335,28 +4335,28 @@ object frmEnvioEmail: TfrmEnvioEmail
       Width = 361
       Height = 21
       Enabled = False
-      TabOrder = 1
+      TabOrder = 4
     end
     object edtPara: TEdit
       Left = 96
       Top = 41
       Width = 450
       Height = 21
-      TabOrder = 2
+      TabOrder = 0
     end
     object memCorpo: TMemo
       Left = 96
       Top = 121
       Width = 450
       Height = 264
-      TabOrder = 3
+      TabOrder = 2
     end
     object edtAssunto: TEdit
       Left = 96
       Top = 81
       Width = 450
       Height = 21
-      TabOrder = 4
+      TabOrder = 1
     end
   end
 end
