@@ -9,7 +9,7 @@ uses
   IniFiles,IdComponent,IdTCPConnection,IdTCPClient,IdHTTP,IdBaseComponent,IdMessage,
   IdExplicitTLSClientServerBase,IdMessageClient,IdSMTPBase,IdSMTP,IdIOHandler,
   IdIOHandlerSocket,IdIOHandlerStack,IdSSL,IdSSLOpenSSL,IdAttachmentFile,IdText,
-  Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Imaging.jpeg;
+  Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Imaging.jpeg, Vcl.Imaging.GIFImg;
 
 type
   TfrmEnvioEmail = class(TForm)
@@ -22,8 +22,11 @@ type
     lbAnexo: TLabel;
     edtAnexo: TEdit;
     btnEnviar: TButton;
-    Panel1: TPanel;
+    pnGeral: TPanel;
+    pnAguarde: TPanel;
+    Image1: TImage;
     procedure btnEnviarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     function EnviarEmail(const AAssunto, ADestino, AAnexo: String; ACorpo: TStrings): Boolean;
@@ -42,14 +45,30 @@ implementation
 
 procedure TfrmEnvioEmail.btnEnviarClick(Sender: TObject);
 begin
-  if edtPara.Text<>EmptyStr then
+  pnAguarde.Visible:=true;
+  pnGeral.Visible:=false;
+
+  TThread.CreateAnonymousThread(procedure
   begin
-    if EnviarEmail(edtAssunto.Text, edtPara.Text, edtAnexo.Text, memCorpo.Lines)
-    then ShowMessage('Enviado com sucesso!');
-  end else
-  begin
-    showmessage('Favor preencher o destinatário');
-  end;
+    if edtPara.Text<>EmptyStr then
+    begin
+      if EnviarEmail(edtAssunto.Text, edtPara.Text, edtAnexo.Text, memCorpo.Lines) then
+      begin
+        pnAguarde.Visible:=false;
+        pnGeral.Visible:=true;
+        ShowMessage('Enviado com sucesso!');
+      end else
+      begin
+        pnAguarde.Visible:=false;
+        pnGeral.Visible:=true;
+      end;
+    end else
+    begin
+      pnAguarde.Visible:=false;
+      pnGeral.Visible:=true;
+      showmessage('Favor preencher o destinatário');
+    end;
+  end).Start;
 end;
 
 function TfrmEnvioEmail.EnviarEmail(const AAssunto, ADestino, AAnexo: String;
@@ -158,6 +177,12 @@ begin
       Result := False;
     end;
   end;
+end;
+
+procedure TfrmEnvioEmail.FormCreate(Sender: TObject);
+begin
+  ( Image1.Picture.Graphic as TGIFImage ).Animate := True;
+  ( Image1.Picture.Graphic as TGIFImage ).AnimationSpeed:= 130;
 end;
 
 end.
