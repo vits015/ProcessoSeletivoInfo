@@ -30,6 +30,8 @@ type
   private
     { Private declarations }
     function EnviarEmail(const AAssunto, ADestino, AAnexo: String; ACorpo: TStrings): Boolean;
+    procedure gerenciaEnvioEmail;
+    procedure configuraImagemAnimada;
   public
     { Public declarations }
   end;
@@ -45,30 +47,14 @@ implementation
 
 procedure TfrmEnvioEmail.btnEnviarClick(Sender: TObject);
 begin
-  pnAguarde.Visible:=true;
-  pnGeral.Visible:=false;
+  gerenciaEnvioEmail;
+end;
 
-  TThread.CreateAnonymousThread(procedure
-  begin
-    if edtPara.Text<>EmptyStr then
-    begin
-      if EnviarEmail(edtAssunto.Text, edtPara.Text, edtAnexo.Text, memCorpo.Lines) then
-      begin
-        pnAguarde.Visible:=false;
-        pnGeral.Visible:=true;
-        ShowMessage('Enviado com sucesso!');
-      end else
-      begin
-        pnAguarde.Visible:=false;
-        pnGeral.Visible:=true;
-      end;
-    end else
-    begin
-      pnAguarde.Visible:=false;
-      pnGeral.Visible:=true;
-      showmessage('Favor preencher o destinatário');
-    end;
-  end).Start;
+procedure TfrmEnvioEmail.configuraImagemAnimada;
+//procedimento responsável por configurações necessárias para imagem animada (GIF)
+begin
+  ( Image1.Picture.Graphic as TGIFImage ).Animate := True;
+  ( Image1.Picture.Graphic as TGIFImage ).AnimationSpeed:= 130;
 end;
 
 function TfrmEnvioEmail.EnviarEmail(const AAssunto, ADestino, AAnexo: String;
@@ -181,8 +167,37 @@ end;
 
 procedure TfrmEnvioEmail.FormCreate(Sender: TObject);
 begin
-  ( Image1.Picture.Graphic as TGIFImage ).Animate := True;
-  ( Image1.Picture.Graphic as TGIFImage ).AnimationSpeed:= 130;
+  configuraImagemAnimada;
+end;
+
+procedure TfrmEnvioEmail.gerenciaEnvioEmail;
+// Esse procedimento é responsável por solicitar o envio do email em uma thread
+// para que seja possível ter um feedback visual durante o processamento do mesmo
+begin
+  pnAguarde.Visible:=true;
+  pnGeral.Visible:=false;
+
+  TThread.CreateAnonymousThread(procedure
+  begin
+    if edtPara.Text<>EmptyStr then
+    begin
+      if EnviarEmail(edtAssunto.Text, edtPara.Text, edtAnexo.Text, memCorpo.Lines) then
+      begin
+        pnAguarde.Visible:=false;
+        pnGeral.Visible:=true;
+        ShowMessage('Enviado com sucesso!');
+      end else
+      begin
+        pnAguarde.Visible:=false;
+        pnGeral.Visible:=true;
+      end;
+    end else
+    begin
+      pnAguarde.Visible:=false;
+      pnGeral.Visible:=true;
+      showmessage('Favor preencher o destinatário');
+    end;
+  end).Start;
 end;
 
 end.
