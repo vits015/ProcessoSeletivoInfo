@@ -535,64 +535,107 @@ object frmEnvioEmail: TfrmEnvioEmail
   Position = poDesktopCenter
   PixelsPerInch = 96
   TextHeight = 13
-  object lbPara: TLabel
-    Left = 50
-    Top = 43
-    Width = 31
-    Height = 14
-    Caption = 'Para:'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object lbAssunto: TLabel
-    Left = 35
-    Top = 83
-    Width = 55
-    Height = 14
-    Caption = 'Assunto:'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object lbMensagem: TLabel
-    Left = 21
-    Top = 123
-    Width = 69
-    Height = 14
-    Caption = 'Mensagem:'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object lbAnexo: TLabel
-    Left = 38
-    Top = 411
-    Width = 43
-    Height = 14
-    Caption = 'Anexo:'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-  end
-  object edtPara: TEdit
-    Left = 96
-    Top = 41
-    Width = 450
-    Height = 21
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 611
+    Height = 529
+    Align = alClient
     TabOrder = 0
+    ExplicitLeft = 432
+    ExplicitTop = 459
+    ExplicitWidth = 185
+    ExplicitHeight = 41
+    object lbAnexo: TLabel
+      Left = 38
+      Top = 411
+      Width = 43
+      Height = 14
+      Caption = 'Anexo:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object lbAssunto: TLabel
+      Left = 35
+      Top = 83
+      Width = 55
+      Height = 14
+      Caption = 'Assunto:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object lbMensagem: TLabel
+      Left = 21
+      Top = 123
+      Width = 69
+      Height = 14
+      Caption = 'Mensagem:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object lbPara: TLabel
+      Left = 50
+      Top = 43
+      Width = 31
+      Height = 14
+      Caption = 'Para:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object btnEnviar: TButton
+      Left = 215
+      Top = 456
+      Width = 162
+      Height = 49
+      Cursor = crHandPoint
+      Caption = 'Enviar'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 0
+      OnClick = btnEnviarClick
+    end
+    object edtAnexo: TEdit
+      Left = 96
+      Top = 409
+      Width = 361
+      Height = 21
+      Enabled = False
+      TabOrder = 1
+    end
+    object edtPara: TEdit
+      Left = 96
+      Top = 41
+      Width = 450
+      Height = 21
+      TabOrder = 2
+    end
+    object memCorpo: TMemo
+      Left = 96
+      Top = 121
+      Width = 450
+      Height = 264
+      TabOrder = 3
+    end
   end
   object edtAssunto: TEdit
     Left = 96
@@ -600,36 +643,5 @@ object frmEnvioEmail: TfrmEnvioEmail
     Width = 450
     Height = 21
     TabOrder = 1
-  end
-  object memCorpo: TMemo
-    Left = 96
-    Top = 121
-    Width = 450
-    Height = 264
-    TabOrder = 2
-  end
-  object edtAnexo: TEdit
-    Left = 96
-    Top = 409
-    Width = 361
-    Height = 21
-    Enabled = False
-    TabOrder = 3
-  end
-  object btnEnviar: TButton
-    Left = 215
-    Top = 456
-    Width = 162
-    Height = 49
-    Cursor = crHandPoint
-    Caption = 'Enviar'
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Tahoma'
-    Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 4
-    OnClick = btnEnviarClick
   end
 end

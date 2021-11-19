@@ -9,7 +9,7 @@ uses
   IniFiles,IdComponent,IdTCPConnection,IdTCPClient,IdHTTP,IdBaseComponent,IdMessage,
   IdExplicitTLSClientServerBase,IdMessageClient,IdSMTPBase,IdSMTP,IdIOHandler,
   IdIOHandlerSocket,IdIOHandlerStack,IdSSL,IdSSLOpenSSL,IdAttachmentFile,IdText,
-  Vcl.ExtCtrls, Vcl.ComCtrls;
+  Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Imaging.jpeg;
 
 type
   TfrmEnvioEmail = class(TForm)
@@ -22,6 +22,7 @@ type
     lbAnexo: TLabel;
     edtAnexo: TEdit;
     btnEnviar: TButton;
+    Panel1: TPanel;
     procedure btnEnviarClick(Sender: TObject);
   private
     { Private declarations }
