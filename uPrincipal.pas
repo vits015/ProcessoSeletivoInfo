@@ -103,7 +103,7 @@ XMLDocument:= TXMLDocument.Create(Self);
         NodeEndereco.ChildValues['Bairro'] := pessoa.Endereco.bairro;
         NodeEndereco.ChildValues['Logradouro'] := pessoa.Endereco.logradouro;
         NodeEndereco.ChildValues['Complemento'] := pessoa.Endereco.complemento;
-        NodeEndereco.ChildValues['Numero'] := pessoa.Endereco.numero.ToString;
+        NodeEndereco.ChildValues['Numero'] := pessoa.Endereco.numero;
         NodeEndereco.ChildValues['Cidade'] := pessoa.Endereco.cidade;
         NodeEndereco.ChildValues['Estado'] := pessoa.Endereco.Estado;
         NodeEndereco.ChildValues['Pais'] := pessoa.Endereco.Pais;
@@ -168,7 +168,7 @@ begin
   memo.Lines.Add('- Endereço: ');
   memo.Lines.Add('      - Cep: '          +pessoa.Endereco.cep);
   memo.Lines.Add('      - Logradouro: '   +pessoa.Endereco.logradouro);
-  memo.Lines.Add('      - Numero: '       +pessoa.Endereco.numero.ToString);
+  memo.Lines.Add('      - Numero: '       +pessoa.Endereco.numero);
   memo.Lines.Add('      - Complemento: '  +pessoa.Endereco.complemento);
   memo.Lines.Add('      - Bairro: '       +pessoa.Endereco.bairro);
   memo.Lines.Add('      - Cidade: '       +pessoa.Endereco.cidade);
@@ -186,7 +186,7 @@ begin
     endereco.cidade:=edtCidade.Text;
     endereco.Estado:=edtEstado.Text;
     endereco.complemento:=edtComplemento.Text;
-    endereco.numero:=  StrToInt(edtNumero.Text);
+    endereco.numero:=  edtNumero.Text;
     endereco.Pais:=edtPais.Text;
   finally
     result:=endereco;

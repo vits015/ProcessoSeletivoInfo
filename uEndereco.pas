@@ -8,7 +8,7 @@ Type
     Fcep: String;
     Flogradouro: string;
     Fbairro: String;
-    Fnumero: integer;
+    Fnumero: String;
     Fcomplemento: String;
     Fcidade: String;
     FPais: String;
@@ -19,7 +19,7 @@ Type
     procedure Setcomplemento(const Value: String);
     procedure SetEstado(const Value: String);
     procedure Setlogradouro(const Value: string);
-    procedure Setnumero(const Value: integer);
+    procedure Setnumero(const Value: string);
     procedure SetPais(const Value: String);
 
   public
@@ -29,7 +29,7 @@ Type
     property cidade:String read Fcidade write Setcidade;
     property Estado:String read FEstado write SetEstado;
     property Pais:String read FPais write SetPais;
-    property numero:integer read Fnumero write Setnumero;
+    property numero:string read Fnumero write Setnumero;
     property complemento:String read Fcomplemento write Setcomplemento;
 
     end;
@@ -68,7 +68,7 @@ begin
   Flogradouro := Value;
 end;
 
-procedure TEndereco.Setnumero(const Value: integer);
+procedure TEndereco.Setnumero(const Value: String);
 begin
   Fnumero := Value;
 end;
