@@ -1,8 +1,8 @@
 # Processo Seletivo Info Sistemas
 
-### Programa que realiza cadastro gera um xml e envia email
+## Programa que realiza cadastro gera um xml e envia email
 
-######Tarefa proposta:
+###Tarefa proposta:
 Utilizar a linguagem Delphi (Qualquer versão);
 Criar uma tela de cadastro de clientes, com os seguintes campos:
 Dados do Cadastro:
@@ -28,7 +28,7 @@ Os registros devem ficar salvo em memória, não é necessário criar um banco d
 Disponibilizar o código fonte do projeto no github;
 
 
-####Observações importantes
+###Observações importantes
     - Para que funcione corretamente o sistema precisa ser executado 
     como administrador
     - O projeto possui 2 arquivos (.dll) na pasta debug caso o seu windows
