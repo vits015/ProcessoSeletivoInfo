@@ -53,12 +53,13 @@ type
     procedure btnEnviarClick(Sender: TObject);
   private
     { Private declarations }
-    Function preencheEndereco(endereco:TEndereco):TEndereco;
-    Function preenchePessoa(pessoa:TPessoa):TPessoa;
+    function preencheEndereco(endereco:TEndereco):TEndereco;
+    function preenchePessoa(pessoa:TPessoa):TPessoa;
     procedure criaXML(pessoa:TPessoa);
     function montaCorpoEmail(pessoa:TPessoa; memo:TMemo):TStrings;
     procedure LimpaEndereco;
     procedure preparaEnvioEmail;
+    procedure consultaCEP;
   public
     { Public declarations }
   end;
@@ -76,7 +77,30 @@ begin
   preparaEnvioEmail;
 end;
 
+procedure TfrmPrincipal.consultaCEP;
+// procedimento responsável por consultar a API viacep.com.br e preencher os Campos
+// com os dados retornados.
+begin
+  RESTClient1.BaseURL:='http://viacep.com.br/ws/'+ StringReplace(edtCEP.Text,'-','',[rfReplaceAll, rfIgnoreCase]) +'/json';
+  try
+    RESTRequest1.Execute;
+
+    edtBairro.Text:= StringReplace(RESTResponse1.JSONValue.FindValue('bairro').ToString, '"','',[rfReplaceAll, rfIgnoreCase]);
+    edtCidade.Text:= StringReplace(RESTResponse1.JSONValue.FindValue('localidade').ToString, '"','',[rfReplaceAll, rfIgnoreCase]);
+    edtLogradouro.Text:= StringReplace(RESTResponse1.JSONValue.FindValue('logradouro').ToString, '"','',[rfReplaceAll, rfIgnoreCase]);
+    edtComplemento.Text:= StringReplace(RESTResponse1.JSONValue.FindValue('complemento').ToString, '"','',[rfReplaceAll, rfIgnoreCase]);
+    edtEstado.Text:= StringReplace(RESTResponse1.JSONValue.FindValue('uf').ToString, '"','',[rfReplaceAll, rfIgnoreCase]);
+    except on E:Exception do
+    begin
+      showmessage('CEP inválido');
+      LimpaEndereco;
+    end;
+  end;
+end;
+
 procedure TfrmPrincipal.criaXML(pessoa: TPessoa);
+// Procedimento responsável por criar e preencher o XML que será anexado ao email
+// utilizando os dados preenchidos no objeto
 var
   XMLDocument:TXMLDOCUMENT;
   NodeRegistro, NodeEndereco,NodePessoa: IXMLNode;
@@ -121,28 +145,12 @@ end;
 
 procedure TfrmPrincipal.edtCEPExit(Sender: TObject);
 begin
-  RESTClient1.BaseURL:='http://viacep.com.br/ws/'+ StringReplace(edtCEP.Text,'-','',[rfReplaceAll, rfIgnoreCase]) +'/json';
-  try
-    RESTRequest1.Execute;
-
-    edtBairro.Text:= StringReplace(RESTResponse1.JSONValue.FindValue('bairro').ToString, '"','',[rfReplaceAll, rfIgnoreCase]);
-    edtCidade.Text:= StringReplace(RESTResponse1.JSONValue.FindValue('localidade').ToString, '"','',[rfReplaceAll, rfIgnoreCase]);
-    edtLogradouro.Text:= StringReplace(RESTResponse1.JSONValue.FindValue('logradouro').ToString, '"','',[rfReplaceAll, rfIgnoreCase]);
-    edtComplemento.Text:= StringReplace(RESTResponse1.JSONValue.FindValue('complemento').ToString, '"','',[rfReplaceAll, rfIgnoreCase]);
-    edtEstado.Text:= StringReplace(RESTResponse1.JSONValue.FindValue('uf').ToString, '"','',[rfReplaceAll, rfIgnoreCase]);
-
-    except on E:Exception do
-    begin
-      showmessage('CEP inválido');
-      LimpaEndereco;
-    end;
-
-  end;
-
-
+  consultaCEP;
 end;
 
 procedure TfrmPrincipal.LimpaEndereco;
+// Procedimento responsável por limpar os campos que são preenchidos  automaticamente
+// ao digitar o CEP
 begin
   edtBairro.Text:='';
   edtCidade.Text:='';
@@ -153,6 +161,8 @@ begin
 end;
 
 function TfrmPrincipal.montaCorpoEmail(pessoa: TPessoa; memo: TMemo): TStrings;
+// Função responsável por montar o texto que será enviado no email
+// utilizando os dados preenchidos no objeto do cadastro
 begin
   memo.Clear;
   memo.Lines.Add('Dados do Cadastro:');
@@ -174,6 +184,8 @@ begin
 end;
 
 function TfrmPrincipal.preencheEndereco(endereco: TEndereco): TEndereco;
+// Essa função é responsável por criar e preencher o objeto Endereço com os
+// campos do cadastro
 begin
   endereco := TEndereco.Create;
   try
@@ -191,6 +203,8 @@ begin
 end;
 
 function TfrmPrincipal.preenchePessoa(pessoa: TPessoa): TPessoa;
+// Essa função é responsável por criar e preencher o objeto Pessoa com os
+// campos do cadastro utilizando a função preencheEndereco
 var
   endereco:TEndereco;
 begin
@@ -209,6 +223,8 @@ begin
 end;
 
 procedure TfrmPrincipal.preparaEnvioEmail;
+// Procedimento principal que utiliza todas as outras funções e prepara o envio
+// do email com todas as informações.
 var
   pessoa:TPessoa;
   erro:boolean;
